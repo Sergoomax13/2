@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleAI {
+    uint256 public constant trainingDataSize = 5;
+    uint256 public constant featureSize = 3;
+    
+    uint256[trainingDataSize][featureSize] public trainingData;
+    uint256[trainingDataSize] public labels;
+    
+    constructor() {
+        // Initialize training data and labels
+        trainingData[0][0] = 1;
+        trainingData[0][1] = 2;
+        trainingData[0][2] = 3;
+        labels[0] = 10;
+        
+        trainingData[1][0] = 2;
+        trainingData[1][1] = 3;
+        trainingData[1][2] = 4;
+        labels[1] = 15;
+        
+        trainingData[2][0] = 3;
+        trainingData[2][1] = 4;
+        trainingData[2][2] = 5;
+        labels[2] = 20;
+        
+        trainingData[3][0] = 4;
+        trainingData[3][1] = 5;
+        trainingData[3][2] = 6;
+        labels[3] = 25;
+        
+        trainingData[4][0] = 5;
+        trainingData[4][1] = 6;
+        trainingData[4][2] = 7;
+        labels[4] = 30;
+    }
+    
+    function predict(uint256[featureSize] memory inputData) public view returns (uint256) {
+        uint256 prediction;
+        for (uint256 i = 0; i < trainingDataSize; i++) {
+            bool match = true;
+            for (uint256 j = 0; j < featureSize; j++) {
+                if (inputData[j] != trainingData[i][j]) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
+                prediction = labels[i];
+                break;
+            }
+        }
+        return prediction;
+    }
+}
